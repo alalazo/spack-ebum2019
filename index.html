@@ -540,15 +540,50 @@ Use "<code>spack config edit</code>" to edit the file and add custom configurati
         </section>
 
         <!-- Next features to come -->
-        <section>
+        <section data-background-image="resources/slide-background.svg" data-background-opacity="0.9">
             <section>
-                <h2>Next in the Spack world...</h2>
+                <h2>Spack next big things</h2>
                 Highlights from what's planned for 2019
+            </section>
+
+            <section>
+                <h4>CI infrastructure for source and binary packages</h4>
+                <div>
+                    <img src="resources/ci_infrastructure.svg" height="100%" width="100%"
+                         style="background: none; border: 0">
+                </div>
+            </section>
+
+            <section>
+                <h4>YAML format to describe entire stacks</h4>
+                <pre><code class="yaml" data-trim>
+spack:
+  matrices:
+  - specs:
+    - zlib@1.2.8
+    - zlib@1.2.11
+    - hdf5~mpi@1.10.2
+    - hdf5+mpi@1.10.2
+    toolchains:
+    - ['%gcc@4.9.3', ^mvapich2@2.2]
+    toolchain-generator:
+    - ['%gcc@7.3.0', '%intel@18.0.0']
+    - [^mvapich2@2.2, ^mvapich2@2.3]
+    exclude:
+    - '%intel@18.0.0 ^mvapich2@2.2'
+
+  - specs:
+    - cmake@3.8.2
+    - python@2.7.15
+    toolchains:
+    - ['%gcc@7.3.0']
+                </code></pre>
+                Single command deployment at HPC facilities
             </section>
         </section>
 
         <!-- Resources -->
-        <section>
+        <section data-background-image="resources/slide-background.svg" data-background-opacity="0.9">
             <section>
                 <h2>Thanks for listening! Questions?</h2>
             </section>
