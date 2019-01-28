@@ -131,6 +131,21 @@ class Kripke(Package):
                 </code></pre>
             </section>
 
+            <section>
+                <h3>Easy to work with packages</h3>
+                <pre><code class="shell" data-trim>
+                    $ # Create a new package in the built-in repository
+                    $ spack create &lt;url&gt;
+
+                    $ # Modify an existing package
+                    $ export EDITOR='emacs -nw'
+                    $ spack edit &lt;package-name&gt;
+
+                    $ # Scrape for versions of an existing package
+                    $ spack versions &lt;package-name&gt;
+                </code></pre>
+            </section>
+
         </section>
 
         <!-- How is Spack different from EasyBuild -->
@@ -303,6 +318,30 @@ Concretized
             </section>
 
             <section>
+                <h4>Provenance is preserved for each configuration</h4>
+                <pre><code class="shell" data-trim>
+$ tree $(spack location -i hdf5)/.spack
+&lt;prefix&gt;/.spack
+├── archived-files
+│   └── config.log
+├── build.env
+├── build.out
+├── repos
+│   └── builtin
+│       ├── packages
+│       │   ├── hdf5
+│       │   │   └── package.py
+│       │   └── zlib
+│       │       └── package.py
+│       └── repo.yaml
+└── spec.yaml
+
+6 directories, 7 files
+                </code></pre>
+                The JSON database can be regenerated based on this information
+            </section>
+
+            <section>
                 <h4>Tools are then built over the data in the DB</h4>
                 <ul>
                     <li>Query commands</li>
@@ -380,6 +419,27 @@ ImportError: No module named scipy
                 Activated modules look like they are site installed
             </section>
 
+            <section>
+                <h4>Scrape build logs of installed configurations</h4>
+                <pre><code class="shell" data-trim="">
+$ spack log-parse $(spack location -i hdf5)/.spack/build.out
+0 errors
+
+$ spack log-parse --show=errors,warnings $(spack location -i hdf5)/.spack/build.out
+0 errors
+741 warnings
+     534       CC       H5dbg.lo
+     535       CC       H5system.lo
+     536     H5system.c: In function 'HDfprintf':
+  >> 537     H5system.c:276:45: warning: format not a string literal, argument types not checked [-Wformat-nonliteral]
+     538                              n = fprintf(stream, format_templ, x);
+     539                                                  ^~~~~~~~~~~~
+[...]
+                </code></pre>
+                Permits to investigate issues reported on
+                software that has already been deployed
+            </section>
+
         </section>
 
         <!-- RPATH philosophy -->
@@ -387,12 +447,14 @@ ImportError: No module named scipy
             <section>
                 <h3>Spack installed software runs the way it was built!</h3>
             </section>
-        </section>
 
-        <!-- Configuration hierarchies -->
-        <section data-background-image="resources/slide-background.svg" data-background-opacity="0.9">
             <section>
-                <h3>Spack is highly configurable!</h3>
+                <h4>Set RPATH using compiler wrappers</h4>
+                <div>
+                    <img src="resources/compiler-wrapper.svg" height="80%" width="80%"
+                         style="background: none; border: 0">
+                </div>
+                Available in EasyBuild since version 3.5.2
             </section>
         </section>
 
@@ -536,6 +598,44 @@ Use "<code>spack config edit</code>" to edit the file and add custom configurati
                 Using either <code>spack.yaml</code> or <code>spack.lock</code> you can recreate an environment
             </section>
 
+            <section>
+                <h3>Coming soon in Spack environments...</h3>
+            </section>
+
+            <section>
+                <h4>Associate a view with an environment</h4>
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <pre><code class="yaml" data-trim>
+spack:
+  specs:
+  - hdf5+mpi
+  - bzip2
+
+  view: True
+                                </code></pre>
+                            </td>
+                            <td>
+                                <pre><code class="shell" data-trim>
+$ ls .spack-env/view/bin
+h5clear   h5diff   ...   h5unjam
+h5copy    h5dump   ...   ph5diff
+h5debug   ...      ...
+
+$ ls .spack-env/view/include
+H5ACpublic.h     ...   hdf5.h
+H5Apublic.h      ...   zconf.h
+H5Cpublic.h      ...   zlib.h
+                                </code></pre>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <em>Views</em> are projections of the Spack combinatorial space into a single prefix
+            </section>
+
         </section>
 
         <!-- Next features to come -->
@@ -578,6 +678,16 @@ spack:
     - ['%gcc@7.3.0']
                 </code></pre>
                 Single command deployment at HPC facilities
+            </section>
+
+            <section>
+                <h4>Chain instances to read upstream databases</h4>
+                It's Spack all the way down!
+            </section>
+
+            <section>
+                <h4>Concretization prefers already available binaries</h4>
+                Probably the <em>most wanted feature</em> in Spack
             </section>
         </section>
 
