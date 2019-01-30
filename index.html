@@ -48,8 +48,9 @@
             <section>
                 <h3>Spack is a <u>package manager</u></h3>
                 <ul>
-                    <li>Builds from sources, supports binary packaging</li>
+                    <li>Tracks metadata for installed software</li>
                     <li>Support for supercomputers, linux and MacOS</li>
+                    <li>Builds from sources, supports binary packaging</li>
                     <li>Multiple configurations of the same software</li>
                     <li>Provides packages for multiple languages</li>
                     <li>Can be used for deployment, development or QA</li>
@@ -114,7 +115,7 @@
 
             <section>
                 <h3>Packages are Python classes</h3>
-                <pre><code class="python">
+                <pre><code class="python" data-trim="">
 class Kripke(Package):
     """Kripke is a simple, scalable, 3D Sn
     deterministic particle transport mini app.
@@ -123,11 +124,11 @@ class Kripke(Package):
     url      = "https://codesign.llnl.gov/kripke-1.1.tar.gz"
 
     version('1.1', '7fe6f2b26ed983a6ce5495ab701f85bf')
+    version('1.0', 'f4247dde07952a5ff866b24e45b5cdd1')
 
     variant('mpi', default=True, description='Build with MPI.')
 
     depends_on('mpi', when="+mpi")
-
                 </code></pre>
             </section>
 
@@ -151,7 +152,7 @@ class Kripke(Package):
         <!-- How is Spack different from EasyBuild -->
         <section data-background-image="resources/slide-background.svg" data-background-opacity="0.9" >
             <section>
-                <h2>How is Spack different from Easybuild?</h2>
+                <h3>3 reasons Spack is different from Easybuild</h3>
             </section>
         </section>
 
@@ -445,16 +446,17 @@ $ spack log-parse --show=errors,warnings $(spack location -i hdf5)/.spack/build.
         <!-- RPATH philosophy -->
         <section data-background-image="resources/slide-background.svg" data-background-opacity="0.9">
             <section>
-                <h3>Spack installed software runs the way it was built!</h3>
+                <h3>Spack can fine-tune compiler options to user's needs!</h3>
+                <!-- <h3>Spack installed software runs the way it was built!</h3> -->
             </section>
 
             <section>
-                <h4>Set RPATH using compiler wrappers</h4>
+                <h4>Wrapper scripts mediate compilation</h4>
                 <div>
                     <img src="resources/compiler-wrapper.svg" height="80%" width="80%"
                          style="background: none; border: 0">
                 </div>
-                Available in EasyBuild since version 3.5.2
+                Also ensure the software <em>runs the way it was built</em>
             </section>
         </section>
 
@@ -682,11 +684,28 @@ spack:
 
             <section>
                 <h4>Chain instances to read upstream databases</h4>
+                <div>
+                    <img src="resources/spack-chains.svg" width="70%" height="70%"
+                         style="background: none; border: 0">
+                </div>
                 It's Spack all the way down!
             </section>
 
             <section>
+                <h4>Specific target information in specs</h4>
+                <div>
+                    <img src="resources/targets.svg" width="45%" height="45%"
+                         style="background: none; border: 0">
+                </div>
+                Given a target automatically activate optimizations
+            </section>
+
+            <section>
                 <h4>Concretization prefers already available binaries</h4>
+                <div>
+                    <img src="resources/concretizer-enhancement.svg" width="65%" height="65%"
+                         style="background: none; border: 0">
+                </div>
                 Probably the <em>most wanted feature</em> in Spack
             </section>
         </section>
