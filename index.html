@@ -49,10 +49,10 @@
                 <h3>Spack is a <u>package manager</u></h3>
                 <ul>
                     <li>Tracks metadata for installed software</li>
+                    <li>Multiple configurations of the same software</li>
                     <li>Support for supercomputers, linux and MacOS</li>
                     <li>Builds from sources, supports binary packaging</li>
-                    <li>Multiple configurations of the same software</li>
-                    <li>Provides packages for multiple languages</li>
+                    <!-- <li>Provides packages for multiple languages</li> -->
                     <li>Can be used for deployment, development or QA</li>
                 </ul>
                 <br>
@@ -395,6 +395,26 @@ $ spack uninstall zlib@1.2.8
                     <li>Everything is powered by Jinja2 templates</li>
                     <li>Support for both TCL and Lua modules</li>
                 </ul>
+                <p><a href="https://spack.readthedocs.io/en/latest/tutorial_modules.html">Tutorial: Spack 101 - module files</a></p>
+            </section>
+
+            <section>
+                <h4>Generate module files for HPC sites</h4>
+                <pre><code class="yaml" data-trim>
+modules:
+  lmod:
+    core_compilers:
+      - gcc@4.8.5
+    hierarchy:
+      - mpi
+      - lapack
+    hash_length: 0
+    all:
+      suffixes:
+        +mpi: mpi
+        +openmp: openmp
+        ...
+                </code></pre>
                 <p><a href="https://spack.readthedocs.io/en/latest/tutorial_modules.html">Tutorial: Spack 101 - module files</a></p>
             </section>
 
